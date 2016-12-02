@@ -33,11 +33,17 @@ namespace SyncVsAsync.Services
             if (searchResultsGrid == null) return result;
 
             var searchResultsLinks = GetSearchResultsLinks(searchResultsGrid);
+
+            var PageTasks = new List<Task<HtmlDocument>>();
+
             foreach (var linkUrl in searchResultsLinks)
             {
                 result.Add(linkUrl);
                 await LoadDocumentAsync(linkUrl);
+                PageTasks.Add(LoadDocumentAsync(linkUrl));
             }
+
+            Task.WaitAll(PageTasks.ToArray());
 
             return result;
         }
