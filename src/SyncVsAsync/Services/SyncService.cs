@@ -6,7 +6,7 @@ using HtmlAgilityPack;
 
 namespace SyncVsAsync.Services
 {
-    public class SyncService : ISyncService
+    public class SyncService
     {
         public List<string> Search()
         {
@@ -79,14 +79,6 @@ namespace SyncVsAsync.Services
             {
                 "http://www.bing.com/search?q=C%23&first=0"
             };
-
-            //var searchString = "http://www.bing.com/search?q=C%23&first=";
-            //var result = new List<string>();
-            //for (var x = 0; x < 13; x = x + 13)
-            //{
-            //    result.Add($"{searchString}{x}");
-            //}
-            //return result;
         }
     }
 }

@@ -10,6 +10,8 @@ namespace SyncVsAsync
     {
         public Startup(IHostingEnvironment env)
         {
+            System.Net.ServicePointManager.DefaultConnectionLimit = 1000;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)

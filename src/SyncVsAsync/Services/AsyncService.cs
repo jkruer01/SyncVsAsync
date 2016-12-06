@@ -7,12 +7,11 @@ using HtmlAgilityPack;
 
 namespace SyncVsAsync.Services
 {
-    public class AsyncService : IAsyncService
+    public class AsyncService
     {
         public async Task<List<string>> SearchAsync()
         {
             var bingUrls = getBingUrls();
-
             var result = new List<string>();
             foreach (var bingUrl in bingUrls)
             {
@@ -33,6 +32,7 @@ namespace SyncVsAsync.Services
             if (searchResultsGrid == null) return result;
 
             var searchResultsLinks = GetSearchResultsLinks(searchResultsGrid);
+
             foreach (var linkUrl in searchResultsLinks)
             {
                 result.Add(linkUrl);
@@ -85,14 +85,6 @@ namespace SyncVsAsync.Services
             {
                 "http://www.bing.com/search?q=C%23&first=0"
             };
-
-            //var searchString = "http://www.bing.com/search?q=C%23&first=";
-            //var result = new List<string>();
-            //for (var x = 0; x < 13; x = x + 13)
-            //{
-            //    result.Add($"{searchString}{x}");
-            //}
-            //return result;
         }
     }
 }

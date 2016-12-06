@@ -7,7 +7,7 @@ namespace SyncVsAsync.Controllers
     [Route("api/[controller]")]
     public class SearchBingSyncController : Controller
     {
-        private readonly ISyncService _syncService;
+        private readonly SyncService _syncService;
 
         public SearchBingSyncController()
         {

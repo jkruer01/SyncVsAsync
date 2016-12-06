@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace LoadGenerator
@@ -17,7 +18,7 @@ namespace LoadGenerator
             {
                 Console.Write("Run Asyncronously (Y/N)?");
                 var runAsyncronously = Console.ReadLine().ToLower() == "y";
-                var tasks = Enumerable.Range(0, 50).Select(num => CallApi(num, runAsyncronously)).ToArray();
+                var tasks = Enumerable.Range(0, 200).Select(num => CallApi(num, runAsyncronously)).ToArray();
                 Task.WaitAll(tasks);
                 Console.Write("Finished. Quit (Y/N)?");
                 quit = Console.ReadLine().ToLower() == "y";
@@ -31,10 +32,17 @@ namespace LoadGenerator
             string result;
             try
             {
-                using (var client = new WebClient())
+                //var url = runAsyncronously ? "http://localhost:60383/api/SearchBingAsync" : "http://localhost:60383/api/SearchBingSync";
+                var url = runAsyncronously ? "http://localhost:5000/api/SearchBingAsync?random=" : "http://localhost:5000/api/SearchBingSync?random=";
+
+                using (var client = new HttpClient
                 {
-                    var url = runAsyncronously ? "http://localhost:60383/api/SearchBingAsync" : "http://localhost:60383/api/SearchBingSync";
-                    await client.DownloadStringTaskAsync(url);
+                    Timeout = TimeSpan.FromSeconds(60)
+                })
+                using (var response = await client.GetAsync(url + Guid.NewGuid()))
+                using (var content = response.Content)
+                {
+                    var downloadedContent = await content.ReadAsStringAsync();
                     result = "Success!";
                 }
             }

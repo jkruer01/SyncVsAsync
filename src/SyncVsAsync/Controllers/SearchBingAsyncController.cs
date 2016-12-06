@@ -8,18 +8,18 @@ namespace SyncVsAsync.Controllers
     [Route("api/[controller]")]
     public class SearchBingAsyncController : Controller
     {
-        private readonly IAsyncService _asyncService;
+        private readonly AsyncService _syncService;
 
         public SearchBingAsyncController()
         {
-            _asyncService = new AsyncService();
+            _syncService = new AsyncService();
         }
 
         // GET api/values
         [HttpGet]
         public async Task<List<string>> GetAsync()
         {
-            return await _asyncService.SearchAsync();
+            return await _syncService.SearchAsync();
         }
     }
 }
